@@ -1,6 +1,7 @@
 import { Routes, Route, NavLink, Navigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth.js'
 import Agenda from './Agenda.jsx'
+import Pacientes from './Pacientes.jsx'
 
 export default function Dashboard() {
   const { user, signOut } = useAuth()
@@ -26,7 +27,7 @@ export default function Dashboard() {
         <Routes>
           <Route index element={<Navigate to="agenda" replace />} />
           <Route path="agenda" element={<Agenda />} />
-          <Route path="pacientes" element={<PlaceholderPage title="Pacientes" />} />
+          <Route path="pacientes" element={<Pacientes />} />
           <Route path="documentos" element={<PlaceholderPage title="Documentos" />} />
           <Route path="pagos" element={<PlaceholderPage title="Pagos" />} />
         </Routes>

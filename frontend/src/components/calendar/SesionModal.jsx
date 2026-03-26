@@ -50,7 +50,6 @@ export default function SesionModal({ sesion, slotInicio, onGuardar, onCancelar,
     monto: sesion?.monto || '',
     notas: sesion?.notas || '',
     recurrencia: 'puntual',
-    cantidad: 8,
   })
 
   useEffect(() => {
@@ -75,9 +74,8 @@ export default function SesionModal({ sesion, slotInicio, onGuardar, onCancelar,
       const fecha_inicio = buildISO(fecha, hora, minutos)
       const fecha_fin = calcularFin()
       const esRecurrente = form.recurrencia !== 'puntual'
-      const semanas = form.recurrencia === 'quincenal'
-        ? form.cantidad * 2
-        : form.cantidad
+      // Semanal: 52 sesiones (1 año) — Quincenal: 26 sesiones (1 año)
+      const semanas = form.recurrencia === 'quincenal' ? 26 : 52
 
       await onGuardar({
         paciente_id: form.paciente_id,
@@ -88,7 +86,6 @@ export default function SesionModal({ sesion, slotInicio, onGuardar, onCancelar,
         notas: form.notas,
         es_recurrente: esRecurrente,
         semanas: esRecurrente ? semanas : 1,
-        // para quincenal, le indicamos al backend el intervalo en días
         intervalo_dias: form.recurrencia === 'quincenal' ? 14 : 7,
       })
     } catch (e) {
@@ -168,12 +165,6 @@ export default function SesionModal({ sesion, slotInicio, onGuardar, onCancelar,
                   </label>
                 ))}
               </div>
-            </Campo>
-          )}
-
-          {!sesion && form.recurrencia !== 'puntual' && (
-            <Campo label={`Cantidad de sesiones (cada ${form.recurrencia === 'quincenal' ? '2 semanas' : 'semana'})`}>
-              <input type="number" name="cantidad" value={form.cantidad} onChange={handleChange} min={2} max={52} style={{ ...s.input, width: 80 }} />
             </Campo>
           )}
 
