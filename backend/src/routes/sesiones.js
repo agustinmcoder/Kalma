@@ -6,6 +6,17 @@ import { createSupabaseClient } from '../lib/supabase.js'
 const app = new Hono()
 app.use('*', requireAuth, injectTenant)
 
+// GET /sesiones/:id — sesión individual
+app.get('/:id', async (c) => {
+  const db = createSupabaseClient(c.env)
+  const profesionalId = c.get('profesionalId')
+  const { id } = c.req.param()
+
+  const rows = await db.get('sesiones', `id=eq.${id}&profesional_id=eq.${profesionalId}&select=*,paciente:pacientes(id,nombre,apellido)&limit=1`)
+  if (!rows.length) return c.json({ error: 'Sesión no encontrada' }, 404)
+  return c.json({ sesion: rows[0] })
+})
+
 // GET /sesiones?desde=ISO&hasta=ISO
 // El profesional ve todas las suyas; el paciente ve solo las propias
 app.get('/', async (c) => {
@@ -54,6 +65,13 @@ app.post('/', async (c) => {
     return c.json({ error: 'Superposición de horarios con otra sesión', conflictos }, 409)
   }
 
+  // Para sesiones online, generar room de Jitsi único por sesión
+  function jitsiUrl() {
+    return modalidad === 'online'
+      ? `https://meet.jit.si/kalma-${crypto.randomUUID().replace(/-/g, '').slice(0, 12)}`
+      : null
+  }
+
   const sesionBase = { profesional_id: profesionalId, paciente_id, fecha_inicio, fecha_fin, modalidad, monto, notas, es_recurrente: !!es_recurrente }
 
   // Si es recurrente, crear múltiples sesiones con el mismo recurrencia_id
@@ -67,7 +85,7 @@ app.post('/', async (c) => {
       inicio.setDate(inicio.getDate() + i * intervalo_dias)
       fin.setDate(fin.getDate() + i * intervalo_dias)
 
-      sesiones.push({ ...sesionBase, recurrencia_id, fecha_inicio: inicio.toISOString(), fecha_fin: fin.toISOString() })
+      sesiones.push({ ...sesionBase, recurrencia_id, link_videollamada: jitsiUrl(), fecha_inicio: inicio.toISOString(), fecha_fin: fin.toISOString() })
     }
 
     const { ok, data } = await db.post('sesiones', sesiones)
@@ -76,7 +94,7 @@ app.post('/', async (c) => {
   }
 
   // Sesión única
-  const { ok, data } = await db.post('sesiones', sesionBase)
+  const { ok, data } = await db.post('sesiones', { ...sesionBase, link_videollamada: jitsiUrl() })
   if (!ok) return c.json({ error: 'Error al crear la sesión' }, 500)
   return c.json({ sesion: data[0] }, 201)
 })

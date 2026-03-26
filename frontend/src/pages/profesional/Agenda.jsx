@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay, startOfMonth, endOfMonth, addMonths, subMonths } from 'date-fns'
 import { es } from 'date-fns/locale'
@@ -28,6 +29,7 @@ const COLORES = {
 }
 
 export default function Agenda() {
+  const navigate = useNavigate()
   const [mesActual, setMesActual] = useState(new Date())
   const desde = startOfMonth(subMonths(mesActual, 1)).toISOString()
   const hasta = endOfMonth(addMonths(mesActual, 1)).toISOString()
@@ -101,8 +103,15 @@ export default function Agenda() {
         // Click en un slot vacío → crear sesión
         onSelectSlot={(slot) => setModal({ tipo: 'nueva', slotInicio: slot.start })}
         selectable
-        // Click en evento existente → editar
-        onSelectEvent={(event) => setModal({ tipo: 'editar', sesion: event.resource })}
+        // Click en evento existente → editar o entrar a videollamada
+        onSelectEvent={(event) => {
+          const sesion = event.resource
+          if (sesion.link_videollamada && sesion.modalidad === 'online') {
+            setModal({ tipo: 'editar', sesion })
+          } else {
+            setModal({ tipo: 'editar', sesion })
+          }
+        }}
         defaultView="week"
         views={['month', 'week', 'day']}
       />

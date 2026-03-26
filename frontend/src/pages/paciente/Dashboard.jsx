@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../services/supabase.js'
 import { api } from '../../services/api.js'
 import { useAuth } from '../../hooks/useAuth.js'
@@ -10,6 +11,7 @@ const PAGO_ESTADO_COLOR = { pendiente: '#9b8878', aprobado: '#065f46', rechazado
 
 export default function PacienteDashboard() {
   const { signOut } = useAuth()
+  const navigate = useNavigate()
   const [sesiones, setSesiones] = useState([])
   const [loading, setLoading] = useState(true)
   const [subiendo, setSubiendo] = useState(null) // sesion_id activo
@@ -102,9 +104,9 @@ export default function PacienteDashboard() {
 
             <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {s.link_videollamada && (
-                <a href={s.link_videollamada} target="_blank" rel="noreferrer" style={btnLink}>
+                <button onClick={() => navigate(`/video/${s.id}`)} style={btnLink}>
                   Entrar a la sesión
-                </a>
+                </button>
               )}
               {s.pago_estado === 'pendiente' && (
                 subiendo === s.id ? (

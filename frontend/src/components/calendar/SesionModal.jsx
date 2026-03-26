@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api.js'
 import { format } from 'date-fns'
 
@@ -30,6 +31,7 @@ function buildISO(fecha, hora, minutos) {
 }
 
 export default function SesionModal({ sesion, slotInicio, onGuardar, onCancelar, onEliminar }) {
+  const navigate = useNavigate()
   const [pacientes, setPacientes] = useState([])
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -176,9 +178,16 @@ export default function SesionModal({ sesion, slotInicio, onGuardar, onCancelar,
 
           <div style={s.actions}>
             {sesion && (
-              <button type="button" onClick={() => onEliminar(sesion.id)} style={s.btnEliminar}>
-                Cancelar sesión
-              </button>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                {sesion.link_videollamada && (
+                  <button type="button" onClick={() => navigate(`/video/${sesion.id}`)} style={{ ...s.btnPrimario, background: '#7a9e7e' }}>
+                    Entrar a la sesión
+                  </button>
+                )}
+                <button type="button" onClick={() => onEliminar(sesion.id)} style={s.btnEliminar}>
+                  Cancelar sesión
+                </button>
+              </div>
             )}
             <div style={{ display: 'flex', gap: 8 }}>
               <button type="button" onClick={onCancelar} style={s.btnSecundario} disabled={loading}>Cancelar</button>

@@ -5,6 +5,7 @@ import Register from './pages/auth/Register.jsx'
 import RegisterPaciente from './pages/auth/RegisterPaciente.jsx'
 import Dashboard from './pages/profesional/Dashboard.jsx'
 import PacienteDashboard from './pages/paciente/Dashboard.jsx'
+import VideoLlamada from './pages/VideoLlamada.jsx'
 function AdminDashboard() { return <h1>Dashboard Admin (en construcción)</h1> }
 
 export default function App() {
@@ -34,6 +35,13 @@ export default function App() {
         <Route path="/admin/*" element={
           <ProtectedRoute role="admin">
             <AdminDashboard />
+          </ProtectedRoute>
+        } />
+
+        {/* Videollamada — accesible para profesional y paciente */}
+        <Route path="/video/:sesionId" element={
+          <ProtectedRoute>
+            <VideoLlamada />
           </ProtectedRoute>
         } />
 
