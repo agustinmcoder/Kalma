@@ -2,6 +2,7 @@ import { Routes, Route, NavLink, Navigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth.js'
 import Agenda from './Agenda.jsx'
 import Pacientes from './Pacientes.jsx'
+import Pagos from './Pagos.jsx'
 
 export default function Dashboard() {
   const { user, signOut } = useAuth()
@@ -29,7 +30,7 @@ export default function Dashboard() {
           <Route path="agenda" element={<Agenda />} />
           <Route path="pacientes" element={<Pacientes />} />
           <Route path="documentos" element={<PlaceholderPage title="Documentos" />} />
-          <Route path="pagos" element={<PlaceholderPage title="Pagos" />} />
+          <Route path="pagos" element={<Pagos />} />
         </Routes>
       </main>
     </div>

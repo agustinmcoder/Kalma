@@ -4,8 +4,7 @@ import Login from './pages/auth/Login.jsx'
 import Register from './pages/auth/Register.jsx'
 import RegisterPaciente from './pages/auth/RegisterPaciente.jsx'
 import Dashboard from './pages/profesional/Dashboard.jsx'
-
-function PacienteDashboard() { return <h1>Dashboard Paciente (en construcción)</h1> }
+import PacienteDashboard from './pages/paciente/Dashboard.jsx'
 function AdminDashboard() { return <h1>Dashboard Admin (en construcción)</h1> }
 
 export default function App() {

@@ -22,7 +22,7 @@ app.get('/', async (c) => {
 
   // Si es paciente, filtrar solo sus sesiones
   if (role === 'paciente') {
-    const pacienteId = user.user_metadata?.paciente_id
+    const pacienteId = c.get('pacienteId')
     if (!pacienteId) return c.json({ sesiones: [] })
     query += `&paciente_id=eq.${pacienteId}`
   }
