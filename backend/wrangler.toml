@@ -1,0 +1,16 @@
+name = "kalma-api"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+SUPABASE_URL = ""
+SUPABASE_SERVICE_ROLE_KEY = ""
+
+# Para desarrollo local
+[[d1_databases]]
+# sin D1 por ahora — usamos Supabase via HTTP
+
+# Environments
+[env.production]
+name = "kalma-api-production"
