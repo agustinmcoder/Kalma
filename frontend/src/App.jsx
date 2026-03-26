@@ -3,9 +3,8 @@ import ProtectedRoute from './components/ui/ProtectedRoute.jsx'
 import Login from './pages/auth/Login.jsx'
 import Register from './pages/auth/Register.jsx'
 import RegisterPaciente from './pages/auth/RegisterPaciente.jsx'
+import Dashboard from './pages/profesional/Dashboard.jsx'
 
-// Placeholders — se reemplazan a medida que se construyen
-function ProfesionalDashboard() { return <h1>Dashboard Profesional (en construcción)</h1> }
 function PacienteDashboard() { return <h1>Dashboard Paciente (en construcción)</h1> }
 function AdminDashboard() { return <h1>Dashboard Admin (en construcción)</h1> }
 
@@ -21,7 +20,7 @@ export default function App() {
         {/* Profesional */}
         <Route path="/profesional/*" element={
           <ProtectedRoute role="profesional">
-            <ProfesionalDashboard />
+            <Dashboard />
           </ProtectedRoute>
         } />
 
