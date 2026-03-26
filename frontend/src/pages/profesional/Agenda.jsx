@@ -6,6 +6,7 @@ import { es } from 'date-fns/locale'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { useSesiones } from '../../hooks/useSesiones.js'
 import SesionModal from '../../components/calendar/SesionModal.jsx'
+import { exportarICS } from '../../components/calendar/exportICS.js'
 
 const localizer = dateFnsLocalizer({
   format,
@@ -80,12 +81,20 @@ export default function Agenda() {
     <div style={{ padding: 24, fontFamily: 'Georgia, serif' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
         <h2 style={{ margin: 0, color: '#3b2a1a', fontWeight: 600 }}>Agenda</h2>
-        <button
-          onClick={() => setModal({ tipo: 'nueva', slotInicio: new Date() })}
-          style={{ background: '#c47a4a', color: 'white', border: 'none', borderRadius: 8, padding: '9px 18px', cursor: 'pointer', fontSize: 14, fontWeight: 500 }}
-        >
-          + Nueva sesión
-        </button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            onClick={() => exportarICS(sesiones)}
+            style={{ background: 'white', color: '#7a5c45', border: '1px solid #ddd0c4', borderRadius: 8, padding: '9px 14px', cursor: 'pointer', fontSize: 14 }}
+          >
+            Exportar .ics
+          </button>
+          <button
+            onClick={() => setModal({ tipo: 'nueva', slotInicio: new Date() })}
+            style={{ background: '#c47a4a', color: 'white', border: 'none', borderRadius: 8, padding: '9px 18px', cursor: 'pointer', fontSize: 14, fontWeight: 500 }}
+          >
+            + Nueva sesión
+          </button>
+        </div>
       </div>
 
       {loading && <p style={{ color: '#9b8878' }}>Cargando sesiones...</p>}

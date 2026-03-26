@@ -6,6 +6,8 @@ import RegisterPaciente from './pages/auth/RegisterPaciente.jsx'
 import Dashboard from './pages/profesional/Dashboard.jsx'
 import PacienteDashboard from './pages/paciente/Dashboard.jsx'
 import VideoLlamada from './pages/VideoLlamada.jsx'
+import Buscar from './pages/public/Buscar.jsx'
+import PerfilPublico from './pages/public/PerfilPublico.jsx'
 function AdminDashboard() { return <h1>Dashboard Admin (en construcción)</h1> }
 
 export default function App() {
@@ -16,6 +18,8 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         <Route path="/registro-paciente" element={<RegisterPaciente />} />
+        <Route path="/buscar" element={<Buscar />} />
+        <Route path="/p/:slug" element={<PerfilPublico />} />
 
         {/* Profesional */}
         <Route path="/profesional/*" element={
