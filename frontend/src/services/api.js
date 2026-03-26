@@ -17,7 +17,7 @@ async function apiFetch(path, options = {}) {
   })
 
   const data = await res.json()
-  if (!res.ok) throw new Error(data.error || 'Error en la API')
+  if (!res.ok) throw new Error(data.error + (data.detalle ? ' — ' + JSON.stringify(data.detalle) : '') || 'Error en la API')
   return data
 }
 

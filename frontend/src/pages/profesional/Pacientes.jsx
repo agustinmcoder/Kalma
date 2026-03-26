@@ -4,7 +4,7 @@ import { api } from '../../services/api.js'
 import PacienteModal from '../../components/paciente/PacienteModal.jsx'
 
 const API_URL = import.meta.env.VITE_API_URL
-const FRECUENCIA_LABEL = { semanal: 'Semanal', quincenal: 'Quincenal', puntual: 'Puntual' }
+const FRECUENCIA_LABEL = { semanal: 'Semanal', quincenal: 'Quincenal', puntual: 'Puntual', 'a demanda': 'A demanda' }
 
 export default function Pacientes() {
   const [pacientes, setPacientes] = useState([])

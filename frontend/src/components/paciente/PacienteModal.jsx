@@ -5,6 +5,7 @@ const FRECUENCIAS = [
   { value: 'puntual', label: 'Puntual' },
   { value: 'semanal', label: 'Semanal' },
   { value: 'quincenal', label: 'Quincenal' },
+  { value: 'a demanda', label: 'A demanda' },
 ]
 
 const OBRAS_SOCIALES = [

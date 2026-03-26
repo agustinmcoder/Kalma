@@ -73,7 +73,7 @@ app.post('/importar', requireRole('profesional'), async (c) => {
       profesional_id: profesionalId,
       nombre: String(p.nombre).trim(),
       apellido: String(p.apellido).trim(),
-      frecuencia: p.frecuencia || null,
+      frecuencia: ['puntual', 'semanal', 'quincenal', 'a demanda'].includes(String(p.frecuencia || '').trim().toLowerCase()) ? String(p.frecuencia).trim().toLowerCase() : null,
       arancel: p.arancel ? Number(p.arancel) : null,
       fecha_inicio: p.fecha_inicio || null,
     }))
@@ -81,7 +81,10 @@ app.post('/importar', requireRole('profesional'), async (c) => {
   if (!registros.length) return c.json({ error: 'Ningún registro válido (se requiere Nombre y Apellido)' }, 400)
 
   const { ok, data } = await db.post('pacientes', registros)
-  if (!ok) return c.json({ error: 'Error al importar' }, 500)
+  if (!ok) {
+    console.error('Supabase error en importar:', JSON.stringify(data))
+    return c.json({ error: 'Error al importar', detalle: data }, 500)
+  }
   return c.json({ importados: data.length, pacientes: data }, 201)
 })
 
