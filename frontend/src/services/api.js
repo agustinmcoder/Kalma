@@ -1,6 +1,6 @@
 import { supabase } from './supabase.js'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8787'
+const API_URL = import.meta.env.VITE_API_URL || 'https://kalma-api.agusmcoder.workers.dev'
 
 // Helper: hace fetch al backend con el JWT de Supabase adjunto
 async function apiFetch(path, options = {}) {
