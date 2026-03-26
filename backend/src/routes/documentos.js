@@ -6,6 +6,18 @@ import { createSupabaseClient } from '../lib/supabase.js'
 const app = new Hono()
 app.use('*', requireAuth, injectTenant)
 
+// GET /documentos/compartidos — el paciente ve sus documentos
+app.get('/compartidos', async (c) => {
+  const db = createSupabaseClient(c.env)
+  const pacienteId = c.get('pacienteId')
+  if (!pacienteId) return c.json({ documentos: [] })
+
+  const documentos = await db.get('documentos',
+    `paciente_id=eq.${pacienteId}&order=updated_at.desc&select=id,titulo,created_at,updated_at`
+  )
+  return c.json({ documentos })
+})
+
 // GET /documentos?paciente_id=X
 app.get('/', async (c) => {
   const db = createSupabaseClient(c.env)

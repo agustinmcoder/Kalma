@@ -9,6 +9,7 @@ import comprobantesRoutes from './routes/comprobantes.js'
 import documentosRoutes from './routes/documentos.js'
 import membresiaRoutes from './routes/membresia.js'
 import perfilRoutes from './routes/perfil.js'
+import solicitudesRoutes from './routes/solicitudes.js'
 
 const app = new Hono()
 
@@ -31,5 +32,6 @@ app.route('/comprobantes', comprobantesRoutes)
 app.route('/documentos', documentosRoutes)
 app.route('/membresia', membresiaRoutes)
 app.route('/perfil', perfilRoutes)
+app.route('/solicitudes', solicitudesRoutes)
 
 export default app

@@ -8,6 +8,7 @@ import PacienteDashboard from './pages/paciente/Dashboard.jsx'
 import VideoLlamada from './pages/VideoLlamada.jsx'
 import Buscar from './pages/public/Buscar.jsx'
 import PerfilPublico from './pages/public/PerfilPublico.jsx'
+import Landing from './pages/public/Landing.jsx'
 function AdminDashboard() { return <h1>Dashboard Admin (en construcción)</h1> }
 
 export default function App() {
@@ -50,7 +51,8 @@ export default function App() {
         } />
 
         {/* Redirect default */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   )

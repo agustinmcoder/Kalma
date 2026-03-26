@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://kalma-api.agusmcoder.workers.dev'
@@ -11,6 +11,11 @@ export default function PerfilPublico() {
   const [profesional, setProfesional] = useState(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
+  const [solicitud, setSolicitud] = useState({ nombre_contacto: '', email_contacto: '', telefono_contacto: '', fecha_solicitada: '', mensaje: '' })
+  const [enviando, setEnviando] = useState(false)
+  const [enviado, setEnviado] = useState(false)
+  const [errorSolicitud, setErrorSolicitud] = useState(null)
+  const formRef = useRef()
 
   useEffect(() => {
     fetch(`${API_URL}/perfil/${slug}`)
@@ -94,12 +99,46 @@ export default function PerfilPublico() {
             </Section>
           )}
 
-          {/* CTA */}
-          <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid #ede0d4', textAlign: 'center' }}>
-            <p style={{ color: '#9b8878', fontSize: 14, marginBottom: 12 }}>¿Querés sacar un turno?</p>
-            <Link to="/registro" style={{ background: '#c47a4a', color: 'white', borderRadius: 8, padding: '11px 28px', textDecoration: 'none', fontSize: 15, fontWeight: 500 }}>
-              Registrarme en Kalma
-            </Link>
+          {/* Formulario de solicitud de turno */}
+          <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid #ede0d4' }}>
+            <h3 style={{ margin: '0 0 16px', fontSize: 16, color: '#3b2a1a' }}>Solicitar turno</h3>
+            {enviado ? (
+              <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 8, padding: '14px 18px', color: '#065f46', fontSize: 14 }}>
+                ¡Solicitud enviada! {p.nombre} se va a comunicar con vos a la brevedad.
+              </div>
+            ) : (
+              <form ref={formRef} onSubmit={async e => {
+                e.preventDefault()
+                setEnviando(true)
+                setErrorSolicitud(null)
+                try {
+                  const res = await fetch(`${API_URL}/solicitudes`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ...solicitud, profesional_id: p.id }),
+                  })
+                  const data = await res.json()
+                  if (!res.ok) throw new Error(data.error || 'Error al enviar')
+                  setEnviado(true)
+                } catch (e) {
+                  setErrorSolicitud(e.message)
+                } finally {
+                  setEnviando(false)
+                }
+              }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                  <input required placeholder="Tu nombre *" value={solicitud.nombre_contacto} onChange={e => setSolicitud(s => ({ ...s, nombre_contacto: e.target.value }))} style={sFormInput} />
+                  <input required type="email" placeholder="Email *" value={solicitud.email_contacto} onChange={e => setSolicitud(s => ({ ...s, email_contacto: e.target.value }))} style={sFormInput} />
+                  <input placeholder="Teléfono" value={solicitud.telefono_contacto} onChange={e => setSolicitud(s => ({ ...s, telefono_contacto: e.target.value }))} style={sFormInput} />
+                  <input required type="datetime-local" value={solicitud.fecha_solicitada} onChange={e => setSolicitud(s => ({ ...s, fecha_solicitada: e.target.value }))} style={sFormInput} />
+                </div>
+                <textarea placeholder="Mensaje (opcional)" value={solicitud.mensaje} onChange={e => setSolicitud(s => ({ ...s, mensaje: e.target.value }))} rows={2} style={{ ...sFormInput, width: '100%', resize: 'vertical', marginBottom: 12, boxSizing: 'border-box' }} />
+                {errorSolicitud && <p style={{ color: '#c0392b', fontSize: 13, marginBottom: 8 }}>{errorSolicitud}</p>}
+                <button type="submit" disabled={enviando} style={{ background: '#c47a4a', color: 'white', border: 'none', borderRadius: 8, padding: '11px 24px', cursor: 'pointer', fontSize: 15, fontWeight: 500 }}>
+                  {enviando ? 'Enviando...' : 'Enviar solicitud'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>
@@ -134,3 +173,4 @@ function Chip({ icon, children }) {
 }
 
 const sPage = { minHeight: '100vh', background: '#fdf8f3', fontFamily: 'Georgia, serif' }
+const sFormInput = { padding: '9px 11px', borderRadius: 7, border: '1px solid #ddd0c4', background: 'white', fontSize: 14, color: '#3b2a1a', width: '100%' }

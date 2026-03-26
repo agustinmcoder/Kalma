@@ -6,6 +6,8 @@ import Pagos from './Pagos.jsx'
 import Documentos from './Documentos.jsx'
 import Reportes from './Reportes.jsx'
 import MiPerfil from './MiPerfil.jsx'
+import Solicitudes from './Solicitudes.jsx'
+import Cuenta from './Cuenta.jsx'
 
 export default function Dashboard() {
   const { user, signOut } = useAuth()
@@ -21,7 +23,9 @@ export default function Dashboard() {
           <NavLink to="/profesional/documentos" style={navStyle}>Documentos</NavLink>
           <NavLink to="/profesional/pagos" style={navStyle}>Pagos</NavLink>
           <NavLink to="/profesional/reportes" style={navStyle}>Reportes</NavLink>
+          <NavLink to="/profesional/solicitudes" style={navStyle}>Solicitudes</NavLink>
           <NavLink to="/profesional/mi-perfil" style={navStyle}>Mi perfil</NavLink>
+          <NavLink to="/profesional/cuenta" style={navStyle}>Mi cuenta</NavLink>
         </nav>
         <div style={styles.footer}>
           <span style={{ fontSize: 13 }}>{nombre}</span>
@@ -36,7 +40,9 @@ export default function Dashboard() {
           <Route path="pacientes" element={<Pacientes />} />
           <Route path="documentos" element={<Documentos />} />
           <Route path="reportes" element={<Reportes />} />
+          <Route path="solicitudes" element={<Solicitudes />} />
           <Route path="mi-perfil" element={<MiPerfil />} />
+          <Route path="cuenta" element={<Cuenta />} />
           <Route path="pagos" element={<Pagos />} />
         </Routes>
       </main>
