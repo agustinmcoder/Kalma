@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import ProtectedRoute from './components/ui/ProtectedRoute.jsx'
 import Login from './pages/auth/Login.jsx'
+import Register from './pages/auth/Register.jsx'
+import RegisterPaciente from './pages/auth/RegisterPaciente.jsx'
 
 // Placeholders — se reemplazan a medida que se construyen
 function ProfesionalDashboard() { return <h1>Dashboard Profesional (en construcción)</h1> }
@@ -13,6 +15,8 @@ export default function App() {
       <Routes>
         {/* Pública */}
         <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Register />} />
+        <Route path="/registro-paciente" element={<RegisterPaciente />} />
 
         {/* Profesional */}
         <Route path="/profesional/*" element={

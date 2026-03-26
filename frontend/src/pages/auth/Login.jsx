@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../../services/supabase.js'
 
 export default function Login() {
@@ -52,6 +52,7 @@ export default function Login() {
           {loading ? 'Entrando...' : 'Entrar'}
         </button>
       </form>
+      <p>¿Sos profesional y no tenés cuenta? <Link to="/registro">Registrate acá</Link></p>
     </div>
   )
 }

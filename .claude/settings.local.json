@@ -5,7 +5,8 @@
       "Bash(npm install:*)",
       "Bash(npm init:*)",
       "Bash(cp .env.example .env.local)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(npx wrangler:*)"
     ]
   }
 }
