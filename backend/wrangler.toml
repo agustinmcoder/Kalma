@@ -4,12 +4,8 @@ compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
-SUPABASE_URL = ""
-SUPABASE_SERVICE_ROLE_KEY = ""
-
-# Para desarrollo local
-[[d1_databases]]
-# sin D1 por ahora — usamos Supabase via HTTP
+SUPABASE_URL = "https://kkjikacqlaomdwvqgmdh.supabase.co"
+# SUPABASE_SERVICE_ROLE_KEY se configura como secret en Cloudflare Dashboard (nunca en texto plano)
 
 # Environments
 [env.production]
