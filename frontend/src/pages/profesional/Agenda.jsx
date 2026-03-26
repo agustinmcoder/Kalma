@@ -21,10 +21,10 @@ const MENSAJES = {
 }
 
 const COLORES = {
-  programada: '#3b82f6',
-  confirmada: '#22c55e',
-  cancelada: '#9ca3af',
-  realizada: '#8b5cf6',
+  programada: '#c47a4a',
+  confirmada: '#7a9e7e',
+  cancelada: '#c4b5a5',
+  realizada: '#8b7355',
 }
 
 export default function Agenda() {
@@ -75,15 +75,18 @@ export default function Agenda() {
   }
 
   return (
-    <div style={{ padding: 16 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <h2 style={{ margin: 0 }}>Agenda</h2>
-        <button onClick={() => setModal({ tipo: 'nueva', slotInicio: new Date() })}>
+    <div style={{ padding: 24, fontFamily: 'Georgia, serif' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+        <h2 style={{ margin: 0, color: '#3b2a1a', fontWeight: 600 }}>Agenda</h2>
+        <button
+          onClick={() => setModal({ tipo: 'nueva', slotInicio: new Date() })}
+          style={{ background: '#c47a4a', color: 'white', border: 'none', borderRadius: 8, padding: '9px 18px', cursor: 'pointer', fontSize: 14, fontWeight: 500 }}
+        >
           + Nueva sesión
         </button>
       </div>
 
-      {loading && <p>Cargando sesiones...</p>}
+      {loading && <p style={{ color: '#9b8878' }}>Cargando sesiones...</p>}
 
       <Calendar
         localizer={localizer}

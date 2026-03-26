@@ -43,21 +43,22 @@ function navStyle({ isActive }) {
   return {
     display: 'block',
     padding: '10px 16px',
-    borderRadius: 6,
+    borderRadius: 8,
     textDecoration: 'none',
-    color: isActive ? 'white' : '#cbd5e1',
-    background: isActive ? '#3b82f6' : 'transparent',
+    color: isActive ? '#3b2a1a' : '#c9b8aa',
+    background: isActive ? '#f5e6d8' : 'transparent',
     marginBottom: 4,
     fontSize: 14,
+    fontWeight: isActive ? 600 : 400,
   }
 }
 
 const styles = {
-  layout: { display: 'flex', height: '100vh', fontFamily: 'system-ui, sans-serif' },
-  sidebar: { width: 200, background: '#1e293b', display: 'flex', flexDirection: 'column', padding: 16, flexShrink: 0 },
-  logo: { color: 'white', fontSize: 20, fontWeight: 700, marginBottom: 24 },
+  layout: { display: 'flex', height: '100vh', fontFamily: 'Georgia, "Times New Roman", serif' },
+  sidebar: { width: 210, background: '#3b2a1a', display: 'flex', flexDirection: 'column', padding: '20px 12px', flexShrink: 0 },
+  logo: { color: '#f5e6d8', fontSize: 22, fontWeight: 700, marginBottom: 28, paddingLeft: 8, letterSpacing: 1 },
   nav: { flex: 1 },
-  footer: { display: 'flex', flexDirection: 'column', gap: 8 },
-  signOut: { background: 'none', border: '1px solid #475569', color: '#94a3b8', borderRadius: 4, padding: '6px 0', cursor: 'pointer', fontSize: 13 },
-  main: { flex: 1, overflowY: 'auto', background: '#f8fafc' },
+  footer: { display: 'flex', flexDirection: 'column', gap: 8, paddingLeft: 8 },
+  signOut: { background: 'none', border: '1px solid #6b5040', color: '#c9b8aa', borderRadius: 6, padding: '7px 0', cursor: 'pointer', fontSize: 13 },
+  main: { flex: 1, overflowY: 'auto', background: '#fdf8f3' },
 }

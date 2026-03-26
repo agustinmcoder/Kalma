@@ -40,7 +40,7 @@ app.post('/', async (c) => {
   const profesionalId = c.get('profesionalId')
   const body = await c.req.json()
 
-  const { paciente_id, fecha_inicio, fecha_fin, modalidad, monto, notas, es_recurrente, semanas } = body
+  const { paciente_id, fecha_inicio, fecha_fin, modalidad, monto, notas, es_recurrente, semanas, intervalo_dias = 7 } = body
 
   if (!paciente_id || !fecha_inicio || !fecha_fin) {
     return c.json({ error: 'Faltan campos obligatorios: paciente_id, fecha_inicio, fecha_fin' }, 400)
@@ -64,8 +64,8 @@ app.post('/', async (c) => {
     for (let i = 0; i < semanas; i++) {
       const inicio = new Date(fecha_inicio)
       const fin = new Date(fecha_fin)
-      inicio.setDate(inicio.getDate() + i * 7)
-      fin.setDate(fin.getDate() + i * 7)
+      inicio.setDate(inicio.getDate() + i * intervalo_dias)
+      fin.setDate(fin.getDate() + i * intervalo_dias)
 
       sesiones.push({ ...sesionBase, recurrencia_id, fecha_inicio: inicio.toISOString(), fecha_fin: fin.toISOString() })
     }
